@@ -1,4 +1,7 @@
 {
+	// default test command (this needs to be a valid shell command)
+	"test_cmd": "rspec",
+	// "test_cmd": "bundle exec rspec",
 	// Uncomment the program you want send text to:
 	"program": "Terminal.app",
 	// "program": "iTerm",

@@ -6,7 +6,7 @@ import tempfile
 
 settings = {}
 
-class SendSelectionCommand(sublime_plugin.TextCommand):
+class SendTestCommand(sublime_plugin.TextCommand):
     @staticmethod
     def escapeString(s):
         s = s.replace('\\', '\\\\')
@@ -71,34 +71,12 @@ class SendSelectionCommand(sublime_plugin.TextCommand):
 
     def run(self, edit):
         global settings
-        settings = sublime.load_settings('SendText.sublime-settings')
+        settings = sublime.load_settings('SendTest.sublime-settings')
+        test_cmd = settings.get('test_cmd')
 
-        # get selection
-        selection = ""
-        for region in self.view.sel():
-            if region.empty():
-                selection += self.view.substr(self.view.line(region)) + "\n"
-                self.advanceCursor(region)
-            else:
-                selection += self.view.substr(region) + "\n"
+        row, col = view.rowcol(view.sel()[0].begin())
 
-        # only proceed if selection is not empty
-        if(selection == "" or selection == "\n"):
-            return
+        # join test framework command with current file name
+        command = ' '.join([test_cmd, self.view.file_name()])
 
         self.send(selection)
-
-
-    def advanceCursor(self, region):
-        (row, col) = self.view.rowcol(region.begin())
-
-        # Make sure not to go past end of next line
-        nextline = self.view.line(self.view.text_point(row + 1, 0))
-        if nextline.size() < col:
-            loc = self.view.text_point(row + 1, nextline.size())
-        else:
-            loc = self.view.text_point(row + 1, col)
-
-        # Remove the old region and add the new one
-        self.view.sel().subtract(region)
-        self.view.sel().add(sublime.Region(loc, loc))

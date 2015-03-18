@@ -1,3 +1,11 @@
+# SendTest for Sublime Text 2 and 3
+
+This is a modified version of the SendText plugin for Sublime Text.
+It's a quick dirty hack to be able to send Rspec tests to terminal.
+I might further develop this if I find it useful :)
+
+Below is the original readme from the SendText plugin.
+
 # SendText for Sublime Text 2 and 3
 
 This package sends text to a terminal (or other program). If text is selected, it will send the selection to the terminal when you press cmd-Enter (Mac) or ctrl-Enter (Linux/Windows); if no text is selected, it will send the current line to the terminal and move the cursor to the next line.
