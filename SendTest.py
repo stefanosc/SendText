@@ -73,10 +73,10 @@ class SendTestCommand(sublime_plugin.TextCommand):
         global settings
         settings = sublime.load_settings('SendTest.sublime-settings')
         test_cmd = settings.get('test_cmd')
-
-        row, col = self.view.rowcol(self.view.sel()[0].begin())
+        view = sublime.Window.active_view(sublime.active_window())
+        # row, col = self.view.rowcol(self.view.sel()[0].begin())
 
         # join test framework command with current file name
-        command = ' '.join([test_cmd, self.view.file_name()])
+        command = ' '.join([test_cmd, view.file_name()])
 
-        self.send(selection)
+        self.send(command)
